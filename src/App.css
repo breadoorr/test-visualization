@@ -1,17 +1,16 @@
-/* General App Styling */
 .App {
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-  color: #333;
+  color: var(--text);
+  background-color: var(--background);
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 20px;
 }
 
-/* Header Styling */
 .App-header {
-  background-color: #2c3e50;
-  color: white;
-  padding: 1rem 0;
+  background-color: var(--primary);
+  color: var(--header-text);
+  padding: 1rem 2rem;
   margin-bottom: 2rem;
   border-radius: 0 0 8px 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -37,7 +36,7 @@
 /* Sidebar Styling */
 .sidebar {
   flex: 0 0 250px;
-  background-color: #f8f9fa;
+  background-color: var(--secondary);
   border-radius: 8px;
   padding: 1rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -51,8 +50,8 @@
 .categories-container h2 {
   margin-top: 0;
   font-size: 1.4rem;
-  color: #2c3e50;
-  border-bottom: 2px solid #3498db;
+  color: var(--text);
+  border-bottom: 2px solid var(--accent);
   padding-bottom: 0.5rem;
   margin-bottom: 1rem;
 }
@@ -70,13 +69,9 @@
   transition: background-color 0.2s;
 }
 
-.category-item:hover {
-  background-color: #e9ecef;
-}
-
 .category-item.selected {
-  background-color: #3498db;
-  color: white;
+  background-color: var(--accent);
+  color: var(--text);
 }
 
 /* Charts Container Styling */
@@ -87,8 +82,58 @@
   gap: 2rem;
 }
 
+/* Sort Control Styling */
+.sort-control {
+  background-color: var(--secondary);
+  border-radius: 8px;
+  padding: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  margin-bottom: 1rem;
+  text-align: right;
+}
+
+.sort-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  cursor: pointer;
+  font-weight: 500;
+  color: var(--text);
+}
+
+.sort-toggle {
+  appearance: none;
+  width: 40px;
+  height: 20px;
+  background-color: var(--primary);
+  border-radius: 20px;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.sort-toggle:checked {
+  background-color: var(--primary);
+}
+
+.sort-toggle:before {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  top: 2px;
+  left: 2px;
+  background-color: var(--header-text);
+  transition: transform 0.3s;
+}
+
+.sort-toggle:checked:before {
+  transform: translateX(20px);
+}
+
 .chart-container {
-  background-color: #f8f9fa;
+  background-color: var(--secondary);
   border-radius: 8px;
   padding: 1rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -97,11 +142,33 @@
 .chart-container h2 {
   margin-top: 0;
   font-size: 1.4rem;
-  color: #2c3e50;
-  border-bottom: 2px solid #3498db;
+  color: var(--text);
+  border-bottom: 2px solid var(--accent);
   padding-bottom: 0.5rem;
   margin-bottom: 1rem;
   text-align: left;
+}
+
+.recharts-text {
+  fill: var(--text);
+}
+
+.recharts-rectangle {
+  fill: var(--primary);
+}
+
+.recharts-tooltip-cursor {
+  fill: var(--accent);
+}
+
+.recharts-tooltip-item {
+  color: var(--text);
+}
+
+#categoryDistribution {
+  .recharts-legend-icon {
+    fill: var(--primary);
+  }
 }
 
 /* Loading and Error Styling */
@@ -111,12 +178,12 @@
   align-items: center;
   height: 400px;
   font-size: 1.2rem;
-  color: #6c757d;
+  color: var(--text);
 }
 
 .error-message {
-  background-color: #f8d7da;
-  color: #721c24;
+  background-color: var(--background);
+  color: var(--error);
   padding: 1rem;
   border-radius: 8px;
   margin-bottom: 1rem;
@@ -127,13 +194,13 @@
 .App-footer {
   margin-top: 2rem;
   padding: 1rem 0;
-  border-top: 1px solid #e9ecef;
-  color: #6c757d;
+  border-top: 1px solid var(--accent);
+  color: var(--text);
   font-size: 0.9rem;
 }
 
 .App-footer a {
-  color: #3498db;
+  color: var(--accent);
   text-decoration: none;
 }
 

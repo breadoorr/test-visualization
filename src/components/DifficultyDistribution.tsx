@@ -1,5 +1,5 @@
 import React from 'react';
-import { PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer } from 'recharts';
+import {PieChart, Pie, Cell, Tooltip, Legend, ResponsiveContainer} from 'recharts';
 import { PieLabelRenderProps } from 'recharts/types/polar/Pie';
 import { Question } from '../services/triviaService';
 
@@ -38,7 +38,7 @@ const DifficultyDistribution: React.FC<DifficultyDistributionProps> = ({ questio
   const data = getDifficultyData();
 
   return (
-    <div className="chart-container">
+    <div className="chart-container" id={"difficultyDistribution"}>
       <h2>Questions by Difficulty</h2>
       <ResponsiveContainer width="100%" height={400}>
         <PieChart>
@@ -46,20 +46,23 @@ const DifficultyDistribution: React.FC<DifficultyDistributionProps> = ({ questio
             data={data}
             cx="50%"
             cy="50%"
-            labelLine={true}
+            labelLine={false}
             outerRadius={150}
             fill="#8884d8"
             dataKey="value"
             label={(props: PieLabelRenderProps) => {
               const { name, percent } = props;
-              return `${name} ${percent ? ((percent as number) * 100).toFixed(0) : 0}%`;
+              if (percent && percent as number > 0) {
+                return `${name} ${((percent as number) * 100).toFixed(0)}%`;
+              }
+              return null;
             }}
           >
             {data.map((_, index) => (
               <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
             ))}
           </Pie>
-          <Tooltip formatter={(value) => [`${value} questions`]} />
+          <Tooltip contentStyle={{border: "1px solid var(--primary)", borderRadius: "10px"}} formatter={(value) => [`${value} questions`]} />
           <Legend />
         </PieChart>
       </ResponsiveContainer>

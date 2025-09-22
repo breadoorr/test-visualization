@@ -4,9 +4,10 @@ import { Question } from '../services/triviaService';
 
 interface CategoryDistributionProps {
   questions: Question[];
+  sortAscending?: boolean;
 }
 
-const CategoryDistribution: React.FC<CategoryDistributionProps> = ({ questions }) => {
+const CategoryDistribution: React.FC<CategoryDistributionProps> = ({ questions, sortAscending = false }) => {
   const getCategoryData = () => {
     const categoryCount: Record<string, number> = {};
     
@@ -27,16 +28,16 @@ const CategoryDistribution: React.FC<CategoryDistributionProps> = ({ questions }
   const data = getCategoryData();
 
   return (
-    <div className="chart-container">
+    <div className="chart-container" id="categoryDistribution">
       <h2>Questions by Category</h2>
       <ResponsiveContainer width="100%" height={600}>
         <BarChart
-          data={data.sort((a, b) => b.count - a.count)}
+          data={data.sort((a, b) => sortAscending ? a.count - b.count : b.count - a.count)}
           margin={{
             top: 20,
             right: 30,
             left: 100,
-            bottom: 100,
+            bottom: 30,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
@@ -44,13 +45,13 @@ const CategoryDistribution: React.FC<CategoryDistributionProps> = ({ questions }
             dataKey="name" 
             angle={-45} 
             textAnchor="end"
-            height={200}
+            height={300}
             interval={0}
           />
           <YAxis />
-          <Tooltip />
-          <Legend />
-          <Bar dataKey="count" fill="#8884d8" name="Number of Questions" />
+          <Tooltip contentStyle={{backgroundColor: "var(--background)", color: "var(--text)", border: "1px solid var(--primary)", borderRadius: "10px"}} />
+          <Legend/>
+          <Bar dataKey="count" fill={"var(--text)"} name="Number of Questions" />
         </BarChart>
       </ResponsiveContainer>
     </div>
