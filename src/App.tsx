@@ -4,6 +4,7 @@ import { fetchCategories, fetchQuestions, Category, Question } from './services/
 import Categories from './components/Categories';
 import CategoryDistribution from './components/CategoryDistribution';
 import DifficultyDistribution from './components/DifficultyDistribution';
+import QuestionNumber from "./components/QuestionNumber";
 
 function App() {
   const [categories, setCategories] = useState<Category[]>([]);
@@ -111,6 +112,13 @@ function App() {
                       <CategoryDistribution
                           questions={questions}
                           sortAscending={sortAscending}/>
+                    </>
+                )}
+                { selectedCategory && (
+                    <>
+                      <div className="charts-container">
+                          <QuestionNumber questions={questions.filter(question => question.category === selectedCategory.name)} />
+                      </div>
                     </>
                 )}
                 <DifficultyDistribution 

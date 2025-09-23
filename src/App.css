@@ -5,6 +5,7 @@
   max-width: 1400px;
   margin: 0 auto;
   padding: 0 20px;
+  overflow: hidden;
 }
 
 .App-header {
@@ -161,14 +162,20 @@
   fill: var(--accent);
 }
 
-.recharts-tooltip-item {
-  color: var(--text);
-}
-
 #categoryDistribution {
   .recharts-legend-icon {
     fill: var(--primary);
   }
+}
+
+
+.question-container {
+  height: 430px;
+}
+
+.question-container h1 {
+  text-align: center;
+  font-size: 10rem;
 }
 
 /* Loading and Error Styling */
@@ -210,12 +217,25 @@
 
 /* Responsive Design */
 @media (max-width: 768px) {
+
+  .App {
+    overflow: scroll;
+  }
   .content-container {
     flex-direction: column;
+    max-width: 99%;
+  }
+
+  #categoryDistribution {
+    min-width: 600px;
+  }
+
+  #difficultyDistribution {
+    min-width: 600px;
   }
   
   .sidebar {
     flex: none;
-    width: 100%;
+    /*width: 100%;*/
   }
 }
