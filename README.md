@@ -29,7 +29,7 @@ A React application that visualizes data from the Open Trivia DB API. This proje
 
 1. Clone the repository
 ```
-git clone https://github.com/yourusername/test-visualization.git
+git clone https://github.com/breadoorr/test-visualization.git
 cd test-visualization
 ```
 
@@ -41,43 +41,6 @@ npm install
 3. Start the development server
 ```
 npm start
-```
-
-The application will open in your browser at [http://localhost:3000](http://localhost:3000).
-
-## Deployment
-
-### GitHub Pages
-
-To deploy this application to GitHub Pages:
-
-1. Add the `homepage` field to your `package.json`:
-```json
-{
-  "homepage": "https://yourusername.github.io/test-visualization"
-}
-```
-
-2. Install the `gh-pages` package:
-```
-npm install --save-dev gh-pages
-```
-
-3. Add deployment scripts to `package.json`:
-```json
-{
-  "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
-  }
-}
-```
-
-4. Deploy the application:
-```
-npm run deploy
 ```
 
 ## Data Source
