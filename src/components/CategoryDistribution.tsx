@@ -4,10 +4,11 @@ import { Question } from '../services/triviaService';
 
 interface CategoryDistributionProps {
   questions: Question[];
+  selectCategory: (categoryName: string) => void;
   sortAscending?: boolean;
 }
 
-const CategoryDistribution: React.FC<CategoryDistributionProps> = ({ questions, sortAscending = false }) => {
+const CategoryDistribution: React.FC<CategoryDistributionProps> = ({ questions, selectCategory,  sortAscending = false }) => {
   const getCategoryData = () => {
     const categoryCount: Record<string, number> = {};
     
@@ -37,6 +38,9 @@ const CategoryDistribution: React.FC<CategoryDistributionProps> = ({ questions, 
             top: 20,
             right: 20,
             bottom: 20,
+          }}
+          onClick={(data) => {
+            selectCategory(data.activeLabel as string);
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />

@@ -86,6 +86,10 @@ function App() {
                       </div>
                       <CategoryDistribution
                           questions={questions}
+                          selectCategory={(categoryName) => {
+                            const cat = categories.find(c => c.name === categoryName) || null;
+                            handleCategorySelect(cat);
+                          }}
                           sortAscending={sortAscending}/>
                     </>
                 ) : (
