@@ -24,34 +24,15 @@ export interface QuestionsResponse {
   results: Question[];
 }
 
+export interface TriviaResponse {
+  questions: Question[];
+  categories: Category[];
+}
+
 // Base URL for the API
 const API_BASE_URL = 'https://opentdb.com';
 
-// Function to fetch categories
-export const fetchCategories = async (): Promise<Category[]> => {
-  try {
-    const response = await axios.get<CategoriesResponse>(`${API_BASE_URL}/api_category.php`);
-    return response.data.trivia_categories;
-  } catch (error) {
-    console.error('Error fetching categories:', error);
-    
-    // Handle specific error types
-    if (axios.isAxiosError(error) && error.response) {
-      if (error.response.status === 429) {
-        throw new Error('Rate limit exceeded. Please try again later.');
-      } else {
-        throw new Error(`Server error: ${error.response.status}. Please try again later.`);
-      }
-    } else if (axios.isAxiosError(error) && error.request) {
-      throw new Error('Network error. Please check your connection and try again.');
-    } else {
-      throw new Error('Failed to fetch categories. Please try again later.');
-    }
-  }
-};
-
-// Function to fetch all questions
-export const fetchQuestions = async (amount: number = 50): Promise<Question[]> => {
+export const fetchData = async (amount: number = 50): Promise<TriviaResponse> => {
   try {
     const response = await axios.get<QuestionsResponse>(`${API_BASE_URL}/api.php`, {
       params: {
@@ -61,7 +42,7 @@ export const fetchQuestions = async (amount: number = 50): Promise<Question[]> =
     });
     
     // Decode base64 encoded strings
-    return response.data.results.map(question => ({
+    let questions =  response.data.results.map(question => ({
       ...question,
       category: atob(question.category),
       type: atob(question.type),
@@ -70,6 +51,22 @@ export const fetchQuestions = async (amount: number = 50): Promise<Question[]> =
       correct_answer: atob(question.correct_answer),
       incorrect_answers: question.incorrect_answers.map(answer => atob(answer)),
     }));
+
+    let categories: Category[] = [];
+    let key = 0;
+    questions.forEach((question) => {
+      if (!categories.some(c => c.name === question.category)) {
+        categories.push({
+          id: key++,
+          name: question.category,
+        });
+      }
+    });
+
+    return {
+      questions,
+      categories
+    }
   } catch (error) {
     console.error('Error fetching questions:', error);
     
