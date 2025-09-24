@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './App.css';
-import { fetchCategories, fetchQuestions, Category, Question } from './services/triviaService';
+import {Category, Question, fetchData} from './services/triviaService';
 import Categories from './components/Categories';
 import CategoryDistribution from './components/CategoryDistribution';
 import DifficultyDistribution from './components/DifficultyDistribution';
@@ -18,16 +18,10 @@ function App() {
   useEffect(() => {
     const getData = async () => {
       try {
-        const categoriesData = await fetchCategories();
-        setCategories(categoriesData);
-        try {
-          const questionsData = await fetchQuestions();
-          setQuestions(questionsData);
-          setLoading(false);
-        } catch (err) {
-          setError('Failed to fetch questions. Please try again later');
-          console.error(err);
-        }
+        const data = await fetchData();
+        setCategories(data.categories.sort((a, b) => a.name.charCodeAt(0) - b.name.charCodeAt(0)));
+        setQuestions(data.questions);
+        setLoading(false);
       } catch (err) {
         setError('Failed to fetch categories. Please try again later.');
         console.error(err);
@@ -48,25 +42,6 @@ function App() {
 
   }, []);
 
-
-
-
-  // Filter categories to only show those with questions
-  const getCategoriesWithQuestions = () => {
-    const categoryCount: Record<string, number> = {};
-    questions.forEach(question => {
-      if (categoryCount[question.category]) {
-        categoryCount[question.category]++;
-      } else {
-        categoryCount[question.category] = 1;
-      }
-    });
-
-    return categories.filter(category => {
-      return categoryCount[category.name] && categoryCount[category.name] > 0;
-    });
-  };
-
   const handleCategorySelect = (category: Category | null) => {
     setSelectedCategory(category);
   };
@@ -86,18 +61,18 @@ function App() {
         <div className="content-container">
           <div className="sidebar">
             <Categories 
-              categories={getCategoriesWithQuestions()}
+              categories={categories}
               selectedCategory={selectedCategory} 
               onSelectCategory={handleCategorySelect} 
             />
           </div>
           
-          <div className="charts-container">
+          <div className={"charts-container " + (selectedCategory ? "selected" : "")}>
             {loading ? (
               <div className="loading">Loading data...</div>
             ) : (
               <>
-                { selectedCategory == null && (
+                { selectedCategory == null ? (
                     <>
                       <div className="sort-control">
                         <label className="sort-label">
@@ -113,13 +88,8 @@ function App() {
                           questions={questions}
                           sortAscending={sortAscending}/>
                     </>
-                )}
-                { selectedCategory && (
-                    <>
-                      <div className="charts-container">
-                          <QuestionNumber questions={questions.filter(question => question.category === selectedCategory.name)} />
-                      </div>
-                    </>
+                ) : (
+                    <QuestionNumber questions={questions.filter(question => question.category === selectedCategory.name)} />
                 )}
                 <DifficultyDistribution 
                   questions={questions.filter(question => ((selectedCategory == null) ? question : question.category === selectedCategory.name))} 

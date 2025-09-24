@@ -43,18 +43,31 @@
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
+.desktop-only {
+  display: block;
+}
+.mobile-only {
+  display: none;
+}
+
 /* Categories Component Styling */
 .categories-container {
   text-align: left;
 }
 
-.categories-container h2 {
+.categories-header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--accent);
+}
+
+.categories-header h2 {
   margin-top: 0;
   font-size: 1.4rem;
   color: var(--text);
-  border-bottom: 2px solid var(--accent);
-  padding-bottom: 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.9rem;
 }
 
 .categories-list {
@@ -73,14 +86,6 @@
 .category-item.selected {
   background-color: var(--accent);
   color: var(--text);
-}
-
-/* Charts Container Styling */
-.charts-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  gap: 2rem;
 }
 
 /* Sort Control Styling */
@@ -133,11 +138,30 @@
   transform: translateX(20px);
 }
 
+/* Charts Container Styling */
+.charts-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+.selected {
+  display: flex;
+  flex-direction: row;
+}
+
+.selected > #difficultyDistribution {
+  height: 55vh;
+  width: 70%;
+}
+
 .chart-container {
   background-color: var(--secondary);
   border-radius: 8px;
   padding: 1rem;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  overflow-x: scroll;
+  overflow-y: hidden;
 }
 
 .chart-container h2 {
@@ -167,12 +191,9 @@
     fill: var(--primary);
   }
 }
-
-
 .question-container {
-  height: 430px;
+  height: 55vh;
 }
-
 .question-container h1 {
   text-align: center;
   font-size: 10rem;
@@ -215,8 +236,7 @@
   text-decoration: underline;
 }
 
-/* Responsive Design */
-@media (max-width: 768px) {
+@media (max-width: 1000px) {
 
   .App {
     overflow: scroll;
@@ -226,16 +246,34 @@
     max-width: 99%;
   }
 
-  #categoryDistribution {
-    min-width: 600px;
+  .selected {
+    display: flex;
+    flex-direction: column;
   }
 
-  #difficultyDistribution {
-    min-width: 600px;
+  .selected > #difficultyDistribution {
+    width: 96.55%;
   }
   
   .sidebar {
     flex: none;
-    /*width: 100%;*/
+  }
+
+  .mobile-only {
+    display: inline-block;
+    font-size: 1.5rem;
+    cursor: pointer;
+    user-select: none;
+  }
+
+  .categories-list {
+    display: none;
+  }
+
+  .categories-list.open {
+    display: block;
+    height: 30vh;
+    overflow-y: auto;
+    z-index: 1000;
   }
 }

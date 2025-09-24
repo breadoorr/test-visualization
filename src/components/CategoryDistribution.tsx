@@ -30,23 +30,19 @@ const CategoryDistribution: React.FC<CategoryDistributionProps> = ({ questions, 
   return (
     <div className="chart-container" id="categoryDistribution">
       <h2>Questions by Category</h2>
-      <ResponsiveContainer width="100%" height={600}>
+      <ResponsiveContainer width="100%" height={400} minWidth={400}>
         <BarChart
           data={data.sort((a, b) => sortAscending ? a.count - b.count : b.count - a.count)}
           margin={{
             top: 20,
-            right: 30,
-            left: 100,
-            bottom: 30,
+            right: 20,
+            bottom: 20,
           }}
         >
           <CartesianGrid strokeDasharray="3 3" />
-          <XAxis 
-            dataKey="name" 
-            angle={-45} 
-            textAnchor="end"
-            height={300}
-            interval={0}
+          <XAxis
+            dataKey="name"
+            display="none"
           />
           <YAxis />
           <Tooltip contentStyle={{backgroundColor: "var(--background)", color: "var(--text)", border: "1px solid var(--primary)", borderRadius: "10px"}} />
